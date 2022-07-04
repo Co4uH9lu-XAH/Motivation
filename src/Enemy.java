@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.util.Random;
 
 public class Enemy {
     int x;
@@ -16,11 +17,20 @@ public class Enemy {
 
     }
     public void move(){
+        Random random = new Random();
         x+=dx;
-        if (x<=10) x=10;
-        if (x>=1120) x=1120;
+        if (x<=0) {
+            dx=random.nextInt(10);
+        }
+        if (x>=1100) {
+            dx=random.nextInt(10)-10;
+        }
         y-=dy;
-        if (y<=0) y=0;
-        if (y>=500) y=500;
+        if (y<=0){
+            dy=random.nextInt(10)-10;
+        }
+        if (y>=580) {
+            dy=random.nextInt(10);
+        }
     }
 }

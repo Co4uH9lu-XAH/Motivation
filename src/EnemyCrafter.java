@@ -8,11 +8,12 @@ public class EnemyCrafter implements Runnable{
     @Override
     public void run() {
         while (true){
-            Random rand = new Random();
+            Random random = new Random();
 
-            enemies.add(new Enemy(rand.nextInt(1200),rand.nextInt(700), rand.nextInt(10), rand.nextInt(10)));
+            enemies.add(new Enemy((random.nextInt(800)+100), (random.nextInt(400)+100), (random.nextInt(20)-10),
+                    (random.nextInt(20)-10)));
             try {
-                Thread.sleep(rand.nextInt(2000));
+                Thread.sleep((random.nextInt(2000))+1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
