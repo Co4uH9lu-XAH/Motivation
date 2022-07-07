@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Random;
 
 // Панель, на которой буду рисовать игру. Помещаю на фрейм
 
@@ -44,8 +45,22 @@ public class GamePanel extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) { // На каждое изменение счетчика вызывается метод move() и перерисовывается метод paint()
         player.move();
         repaint();
+        for (int i = 0; i< EnemyCrafter.enemies.size(); i++ ){
+            EnemyCrafter.enemies.get(i).move();
+        }
+        collisionWithEnemy();
+        }
 
+    private void collisionWithEnemy() {
+        Random random = new Random();
+        for (int i=0; i<EnemyCrafter.enemies.size(); i++){
+            if (player.getRectangle().intersects(EnemyCrafter.enemies.get(i).getRectangle())){
+                EnemyCrafter.enemies.get(i).dx = random.nextInt(20)-10;
+                EnemyCrafter.enemies.get(i).dy = random.nextInt(20)-10;
+            }
     }
+
+}
     private class KeyActionListener implements KeyListener {
         @Override
         public void keyTyped(KeyEvent e) {

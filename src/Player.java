@@ -14,8 +14,13 @@ public class Player {
     int y=400;
     int dx;
     int dy;
+    int imageHeight = serg.getHeight(null);
+    int imageWidth = serg.getWidth(null);
 
 
+    public Rectangle getRectangle (){
+        return new Rectangle(x, y, imageWidth, imageHeight );
+    }
     public void move(){
         x+=dx;
         if (x<=FINAL_RIGHT) x=FINAL_RIGHT;

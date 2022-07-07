@@ -8,6 +8,12 @@ public class Enemy {
     int dx;
     int dy;
     Image image = new ImageIcon("src/img/Enemy1.png").getImage();
+    int imageHeight = image.getHeight(null);
+    int imageWidth = image.getWidth(null);
+
+    public Rectangle getRectangle (){
+        return new Rectangle(x, y, imageWidth, imageHeight );
+    }
 
     public Enemy (int x, int y, int dx, int dy){
         this.x=x;
