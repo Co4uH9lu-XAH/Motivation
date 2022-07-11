@@ -58,6 +58,9 @@ public class GamePanel extends JPanel implements ActionListener {
             if (player.getRectangle().intersects(EnemyCrafter.enemies.get(i).getRectangle())) {
                 EnemyCrafter.enemies.get(i).dx = random.nextInt(20) - 10;
                 EnemyCrafter.enemies.get(i).dy = random.nextInt(20) - 10;
+                EnemyCrafter.enemies.get(i).image=EnemyCrafter.enemies.get(i).imageKnock;
+            }  else if (!player.getRectangle().intersects(EnemyCrafter.enemies.get(i).getRectangle())){
+                EnemyCrafter.enemies.get(i).image=EnemyCrafter.enemies.get(i).imageNormal;
             }
         }
 }
@@ -69,6 +72,8 @@ public class GamePanel extends JPanel implements ActionListener {
                 if (EnemyCrafter.enemies.get(j).getRectangle().intersects(EnemyCrafter.enemies.get(i).getRectangle())) {
                     EnemyCrafter.enemies.get(j).dx = random.nextInt(20) - 10;
                     EnemyCrafter.enemies.get(i).dy = random.nextInt(20) - 10;
+                    EnemyCrafter.enemies.get(i).image=EnemyCrafter.enemies.get(i).imageKnock;
+                    EnemyCrafter.enemies.get(j).image=EnemyCrafter.enemies.get(j).imageKnock;
                 }
             }
         }
