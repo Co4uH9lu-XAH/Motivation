@@ -21,6 +21,7 @@ public class Player {
     public Rectangle getRectangle (){
         return new Rectangle(x, y, imageWidth, imageHeight );
     }
+
     public void move(){
         x+=dx;
         if (x<=FINAL_RIGHT) x=FINAL_RIGHT;

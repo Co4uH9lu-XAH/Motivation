@@ -7,6 +7,7 @@ public class Enemy {
     int y;
     int dx;
     int dy;
+
     Image image = new ImageIcon("src/img/Enemy1.png").getImage();
     int imageHeight = image.getHeight(null);
     int imageWidth = image.getWidth(null);
@@ -27,16 +28,20 @@ public class Enemy {
         x+=dx;
         if (x<=0) {
             dx=random.nextInt(10);
+            dy=(random.nextInt(20))-10;
         }
         if (x>=1100) {
             dx=random.nextInt(10)-10;
+            dy=(random.nextInt(20))-10;
         }
         y-=dy;
         if (y<=0){
             dy=random.nextInt(10)-10;
+            dx=random.nextInt(20)-10;
         }
         if (y>=580) {
             dy=random.nextInt(10);
+            dx=random.nextInt(20)-10;
         }
     }
 }

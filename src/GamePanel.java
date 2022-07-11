@@ -1,4 +1,3 @@
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -36,7 +35,8 @@ public class GamePanel extends JPanel implements ActionListener {
 
         for (int i = 0; i< EnemyCrafter.enemies.size(); i++ ){
             EnemyCrafter.enemies.get(i).move();
-            g.drawImage(EnemyCrafter.enemies.get(i).image, EnemyCrafter.enemies.get(i).x, EnemyCrafter.enemies.get(i).y, null);
+            g.drawImage(EnemyCrafter.enemies.get(i).image, EnemyCrafter.enemies.get(i).x,
+                    EnemyCrafter.enemies.get(i).y, null);
         }
 
     }
@@ -49,18 +49,30 @@ public class GamePanel extends JPanel implements ActionListener {
             EnemyCrafter.enemies.get(i).move();
         }
         collisionWithEnemy();
+        collisionEnemy();
         }
 
     private void collisionWithEnemy() {
         Random random = new Random();
         for (int i=0; i<EnemyCrafter.enemies.size(); i++){
-            if (player.getRectangle().intersects(EnemyCrafter.enemies.get(i).getRectangle())){
-                EnemyCrafter.enemies.get(i).dx = random.nextInt(20)-10;
-                EnemyCrafter.enemies.get(i).dy = random.nextInt(20)-10;
+            if (player.getRectangle().intersects(EnemyCrafter.enemies.get(i).getRectangle())) {
+                EnemyCrafter.enemies.get(i).dx = random.nextInt(20) - 10;
+                EnemyCrafter.enemies.get(i).dy = random.nextInt(20) - 10;
             }
-    }
-
+        }
 }
+
+    private void collisionEnemy() { // Столкновение врагов друг с другом
+        Random random = new Random();
+        for (int i = 0; i < EnemyCrafter.enemies.size(); i++) {
+            for (int j = 0; j < i; j++) {
+                if (EnemyCrafter.enemies.get(j).getRectangle().intersects(EnemyCrafter.enemies.get(i).getRectangle())) {
+                    EnemyCrafter.enemies.get(j).dx = random.nextInt(20) - 10;
+                    EnemyCrafter.enemies.get(i).dy = random.nextInt(20) - 10;
+                }
+            }
+        }
+    }
     private class KeyActionListener implements KeyListener {
         @Override
         public void keyTyped(KeyEvent e) {
