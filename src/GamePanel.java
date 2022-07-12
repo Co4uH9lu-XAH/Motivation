@@ -63,7 +63,7 @@ public class GamePanel extends JPanel implements ActionListener {
                 EnemyCrafter.enemies.get(i).image=EnemyCrafter.enemies.get(i).imageNormal;
             }
         }
-}
+    }
 
     private void collisionEnemy() { // Столкновение врагов друг с другом
         Random random = new Random();
