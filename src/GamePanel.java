@@ -42,7 +42,8 @@ public class GamePanel extends JPanel implements ActionListener {
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) { // На каждое изменение счетчика вызывается метод move() и перерисовывается метод paint()
+    public void actionPerformed(ActionEvent e) { // На каждое изменение счетчика вызывается метод move()
+                                                // и перерисовывается метод paint()
         player.move();
         repaint();
         for (int i = 0; i< EnemyCrafter.enemies.size(); i++ ){
@@ -82,6 +83,9 @@ public class GamePanel extends JPanel implements ActionListener {
         @Override
         public void keyTyped(KeyEvent e) {
             // TODO поставить пробел на пинок
+            if(e.getKeyCode()==KeyEvent.VK_SPACE){ //WTF? Почему не выводит?
+                System.out.println("Test");
+            }
         }
         @Override
         public void keyPressed(KeyEvent e) {
