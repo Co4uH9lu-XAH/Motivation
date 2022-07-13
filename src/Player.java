@@ -1,21 +1,27 @@
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Player {
     final int FINAL_RIGHT = 0;
     final int FINAL_LEFT = 1120;
     final int FINAL_TOP = 0;
     final int FINAL_FLOOR = 500;
+    int playerKnock;
+    boolean hit;
 
+    Image imageNormal = new ImageIcon("src/img/Serg.png").getImage();
+    Image imageLeft = new ImageIcon("src/img/SergLeft.png").getImage();
+    Image imageRight = new ImageIcon("src/img/SergRight.png").getImage();
+    Image image = imageNormal;
 
-    Image serg = new ImageIcon("src/img/Serg.png").getImage();
     int dickCount;
     int x=600;
     int y=400;
     int dx;
     int dy;
-    int imageHeight = serg.getHeight(null);
-    int imageWidth = serg.getWidth(null);
+    int imageHeight = image.getHeight(null);
+    int imageWidth = image.getWidth(null);
 
 
     public Rectangle getRectangle (){
@@ -32,5 +38,10 @@ public class Player {
     }
     public void fight(){
 
+        for(int i= 0; i<EnemyCrafter.enemies.size(); i++){
+            if(getRectangle().intersects(EnemyCrafter.enemies.get(i).getRectangle()) && hit){
+                EnemyCrafter.enemies.remove(EnemyCrafter.enemies.get(i));
+            }
+        }
     }
 }
