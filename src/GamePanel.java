@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.ArrayList;
 import java.util.Random;
 
 // Панель, на которой буду рисовать игру. Помещаю на фрейм
@@ -44,7 +43,6 @@ public class GamePanel extends JPanel implements ActionListener {
         }
         // Отрисовка вражин
         for (int i = 0; i < EnemyCrafter.enemies.size(); i++) {
-            EnemyCrafter.enemies.get(i).move();
             g.drawImage(EnemyCrafter.enemies.get(i).image,EnemyCrafter.enemies.get(i).x,
                     EnemyCrafter.enemies.get(i).y, null);
         }
@@ -52,7 +50,7 @@ public class GamePanel extends JPanel implements ActionListener {
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) { // На каждое изменение счетчика вызывается метод move()
+    public void actionPerformed(ActionEvent e) { // На каждое изменение счетчика вызывается методы,
         // и запускается заново метод paint(), который снова и снова все перерисовывает
         player.move();
         repaint();
