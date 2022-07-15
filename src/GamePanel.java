@@ -17,6 +17,7 @@ public class GamePanel extends JPanel implements ActionListener {
     Image backImage = new ImageIcon("src/img/Panel.png").getImage();
     Player player = new Player();
     EnemyCrafter enemyCrafter = new EnemyCrafter();
+    BackGroundSoundThread backGroundSoundThread = new BackGroundSoundThread();
 
 
 
@@ -25,6 +26,7 @@ public class GamePanel extends JPanel implements ActionListener {
         setFocusable(true);
         addKeyListener(new KeyActionListener());
         enemyCrafter.thread.start();
+        backGroundSoundThread.soundThread.start();
 
     }
 

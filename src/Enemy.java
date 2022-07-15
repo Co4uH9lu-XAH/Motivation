@@ -29,7 +29,7 @@ public class Enemy {
     public void move(){
         Random random = new Random();
         x+=dx;
-        if (x<=0) {
+        if (x<=0 && x>-10) {
             dx=random.nextInt(10);
             dy=(random.nextInt(20))-10;
         }
