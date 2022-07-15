@@ -2,9 +2,9 @@ import javax.sound.sampled.*;
 import java.io.File;
 import java.io.IOException;
 
-public class SoundPlayer {
+public class BackGroundSound {
 
-    SoundPlayer(){
+    BackGroundSound(){
     File backgroundSound = new File("src/sounds/Background.wav");
     AudioInputStream ais;
 

@@ -45,8 +45,8 @@ public class GamePanel extends JPanel implements ActionListener {
         }
         // Отрисовка вражин
         for (int i = 0; i < EnemyCrafter.enemies.size(); i++) {
-            if (EnemyCrafter.enemies.get(i).x < -10 || EnemyCrafter.enemies.get(i).x > 1220 ||
-                    EnemyCrafter.enemies.get(i).y < -10 || EnemyCrafter.enemies.get(i).y > 600) {
+            if (EnemyCrafter.enemies.get(i).x < -10 || EnemyCrafter.enemies.get(i).x > WIDTH ||
+                    EnemyCrafter.enemies.get(i).y < -10 || EnemyCrafter.enemies.get(i).y > HEIGHT) {
                 EnemyCrafter.enemies.remove(EnemyCrafter.enemies.get(i)); // Удаляю объект из коллекции, если он вышел
                                                                             // за пределы экрана
             } else {
