@@ -6,11 +6,8 @@ public class BackGroundSound {
 
     BackGroundSound(){
     File backgroundSound = new File("src/sounds/Background.wav");
-    AudioInputStream ais;
-
-        {
             try {
-                ais = AudioSystem.getAudioInputStream(backgroundSound);
+                AudioInputStream ais = AudioSystem.getAudioInputStream(backgroundSound);
                 Clip clip = AudioSystem.getClip();
                 clip.open(ais);
                 clip.setFramePosition(0);
@@ -23,6 +20,6 @@ public class BackGroundSound {
             } catch (LineUnavailableException e) {
                 e.printStackTrace();
             }
-        }
     }
 }
+
