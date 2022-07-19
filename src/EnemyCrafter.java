@@ -13,7 +13,7 @@ public class EnemyCrafter implements Runnable{
             enemies.add(new Enemy((random.nextInt(800)+100), (random.nextInt(400)+100), (random.nextInt(20)-10),
                     (random.nextInt(20)-10)));
             try {
-                Thread.sleep((random.nextInt(2000))+5000);
+                Thread.sleep((random.nextInt(2000)));
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
