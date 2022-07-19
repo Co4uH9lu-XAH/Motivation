@@ -9,6 +9,8 @@ public class BackGroundSound {
                 AudioInputStream ais = AudioSystem.getAudioInputStream(backgroundSound);
                 Clip clip = AudioSystem.getClip();
                 clip.open(ais);
+                FloatControl volumeLevel = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+                volumeLevel.setValue(3);
                 clip.setFramePosition(0);
                 clip.loop(Clip.LOOP_CONTINUOUSLY); // Зацикливаю фоновый звук
                 clip.start();
