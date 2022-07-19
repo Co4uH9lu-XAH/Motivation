@@ -1,7 +1,7 @@
 
 public class BackGroundSoundThread implements Runnable{
 
-    Thread soundThread = new Thread(this);
+    Thread backgroundSoundThread = new Thread(this);
 
     @Override
     public void run() {

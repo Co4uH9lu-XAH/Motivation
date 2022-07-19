@@ -1,6 +1,5 @@
 import javax.sound.sampled.*;
 import java.io.File;
-import java.io.IOException;
 
 public class BackGroundSound {
 
@@ -13,11 +12,8 @@ public class BackGroundSound {
                 clip.setFramePosition(0);
                 clip.loop(Clip.LOOP_CONTINUOUSLY); // Зацикливаю фоновый звук
                 clip.start();
-            } catch (UnsupportedAudioFileException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (LineUnavailableException e) {
+                ais.close();
+            } catch (Exception e) {
                 e.printStackTrace();
             }
     }

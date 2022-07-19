@@ -21,22 +21,24 @@ public class GamePanel extends JPanel implements ActionListener {
 
 
 
+
+
     public GamePanel() {             // При создании панели в конструкторе запускается счетчик, при каждом тиканье которого происходит всякое
         mainTimer.start();
         setFocusable(true);
         addKeyListener(new KeyActionListener());
         enemyCrafter.thread.start();
-        backGroundSoundThread.soundThread.start();
+        backGroundSoundThread.backgroundSoundThread.start();
+
 
     }
 
     @Override
     public void paint(Graphics g) {
-        g = (Graphics2D) g;
         g.drawImage(backImage, 0, 0, null);
 
         // Отрисовка скриптов человечка при нажатом и отпущенном пробеле
-        if(player.hit) {
+        if(player.isHit()) {
             player.image=player.imageLeft;
             g.drawImage(player.image, player.x, player.y, null);
         } else {
@@ -117,7 +119,7 @@ public class GamePanel extends JPanel implements ActionListener {
                 player.dy = -5;
             }
             if (e.getKeyCode() == KeyEvent.VK_SPACE){
-                player.hit=true;
+                Player.setHit(true);
             }
         }
 
@@ -136,7 +138,7 @@ public class GamePanel extends JPanel implements ActionListener {
                 player.dy=0;
             }
             if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-                player.hit = false;
+                Player.setHit(false);
             }
         }
     }
