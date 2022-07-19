@@ -7,7 +7,7 @@ public class Player {
     final int FINAL_LEFT = 1120;
     final int FINAL_TOP = 0;
     final int FINAL_FLOOR = 500;
-    private static volatile boolean hit;
+    private static  boolean hit;
 
     public static synchronized boolean isHit() {
         return hit;

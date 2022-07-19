@@ -37,7 +37,7 @@ public class GamePanel extends JPanel implements ActionListener {
         g.drawImage(backImage, 0, 0, null);
 
         // Отрисовка скриптов человечка при нажатом и отпущенном пробеле
-        if(player.isHit()) {
+        if(Player.isHit()) {
             player.image=player.imageLeft;
             g.drawImage(player.image, player.x, player.y, null);
         } else {
