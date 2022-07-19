@@ -33,7 +33,7 @@ public class Player {
     SoundThread soundsThread = new SoundThread();
 
     Player (){
-        soundsThread.soundThread.start();
+
     }
     public Rectangle getRectangle (){
         return new Rectangle(x, y, imageWidth, imageHeight );

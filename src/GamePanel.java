@@ -29,8 +29,7 @@ public class GamePanel extends JPanel implements ActionListener {
         addKeyListener(new KeyActionListener());
         enemyCrafter.thread.start();
         backGroundSoundThread.backgroundSoundThread.start();
-
-
+        //soundThread.soundThread.start();
     }
 
     @Override
@@ -106,6 +105,7 @@ public class GamePanel extends JPanel implements ActionListener {
 
         @Override
         public void keyPressed(KeyEvent e) {
+            SoundThread soundThread = new SoundThread();
             if (e.getKeyCode() == KeyEvent.VK_D) {
                 player.dx = 5;
             }
@@ -120,6 +120,7 @@ public class GamePanel extends JPanel implements ActionListener {
             }
             if (e.getKeyCode() == KeyEvent.VK_SPACE){
                 Player.setHit(true);
+                soundThread.soundThread.start();
             }
         }
 

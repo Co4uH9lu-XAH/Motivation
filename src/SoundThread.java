@@ -8,14 +8,12 @@ public class SoundThread extends Thread {
 
     @Override
     public void run() {
-        if (Player.isHit()) {
             sounds.soundHit();
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException en) {
-                en.printStackTrace();
-            }
-            sounds.soundPain();
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
+        sounds.soundPain();
     }
 }
