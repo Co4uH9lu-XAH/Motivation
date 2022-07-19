@@ -29,7 +29,6 @@ public class GamePanel extends JPanel implements ActionListener {
         addKeyListener(new KeyActionListener());
         enemyCrafter.thread.start();
         backGroundSoundThread.backgroundSoundThread.start();
-        //soundThread.soundThread.start();
     }
 
     @Override
@@ -71,7 +70,7 @@ public class GamePanel extends JPanel implements ActionListener {
 
     }
 
-    private void collisionWithEnemy() {
+    private void collisionWithEnemy() { // Столкновение врагов с игроком
         Random random = new Random();
         for (int i = 0; i < EnemyCrafter.enemies.size(); i++) {
             if (player.getRectangle().intersects(EnemyCrafter.enemies.get(i).getRectangle())) {
