@@ -10,15 +10,16 @@ import java.util.Random;
 
 public class GamePanel extends JPanel implements ActionListener {
 
-    public static final int WIDTH = 1200;    // Размеры панели - ширина
-    public static final int HEIGHT = 700;   // Размеры панели - высота
+    public final int WIDTH = 1200;    // Размеры панели - ширина
+    public final int HEIGHT = 700;   // Размеры панели - высота
     Timer mainTimer = new Timer(25, this); // Главный таймер, по которому будет обновляться и перерисовываться панель
 
-    Image backImage = new ImageIcon("src/img/Panel.png").getImage();
+    Image backImage = new ImageIcon("src/img/GamePanel.png").getImage();
+    Image menuBackImage = new ImageIcon("src/img/MenuPanel.png").getImage();
     Player player = new Player();
     EnemyCrafter enemyCrafter = new EnemyCrafter();
     BackGroundSoundThread backGroundSoundThread = new BackGroundSoundThread();
-
+    SoundMenu soundMenu = new SoundMenu();
 
 
 
@@ -27,31 +28,36 @@ public class GamePanel extends JPanel implements ActionListener {
         mainTimer.start();
         setFocusable(true);
         addKeyListener(new KeyActionListener());
-        enemyCrafter.thread.start();
-        backGroundSoundThread.backgroundSoundThread.start();
+        soundMenu.menuSoundStarter();
     }
 
     @Override
     public void paint(Graphics g) {
+        if (!StaticValues.clickStartButton){
+            // TODO нарисовать меню
+            g.drawImage(menuBackImage, 0, 0, null);
+        }else{
+        // Отрисовка игровой панели
         g.drawImage(backImage, 0, 0, null);
 
         // Отрисовка скриптов человечка при нажатом и отпущенном пробеле
-        if(Player.isHit()) {
-            player.image=player.imageLeft;
-            g.drawImage(player.image, player.x, player.y, null);
-        } else {
+            if(StaticValues.hit) {
+                player.image=player.imageLeft;
+                g.drawImage(player.image, player.x, player.y, null);
+            } else {
             player.image=player.imageNormal;
             g.drawImage(player.image, player.x, player.y, null);
         }
         // Отрисовка вражин
-        for (int i = 0; i < EnemyCrafter.enemies.size(); i++) {
-            if (EnemyCrafter.enemies.get(i).x < -10 || EnemyCrafter.enemies.get(i).x > WIDTH ||
-                    EnemyCrafter.enemies.get(i).y < -10 || EnemyCrafter.enemies.get(i).y > HEIGHT) {
-                EnemyCrafter.enemies.remove(EnemyCrafter.enemies.get(i)); // Удаляю объект из коллекции, если он вышел
+        for (int i = 0; i < StaticValues.enemies.size(); i++) {
+            if (StaticValues.enemies.get(i).x < -10 || StaticValues.enemies.get(i).x > WIDTH ||
+                    StaticValues.enemies.get(i).y < -10 || StaticValues.enemies.get(i).y > HEIGHT) {
+                StaticValues.enemies.remove(StaticValues.enemies.get(i)); // Удаляю объект из коллекции, если он вышел
                                                                             // за пределы экрана
             } else {
-                g.drawImage(EnemyCrafter.enemies.get(i).image, EnemyCrafter.enemies.get(i).x, // Если не вышел, рисуем
-                        EnemyCrafter.enemies.get(i).y, null);
+                g.drawImage(StaticValues.enemies.get(i).image, StaticValues.enemies.get(i).x, // Если не вышел, рисуем
+                        StaticValues.enemies.get(i).y, null);
+                }
             }
         }
     }
@@ -62,36 +68,39 @@ public class GamePanel extends JPanel implements ActionListener {
         player.move();
         repaint();
         player.fight();
-        for (int i = 0; i < EnemyCrafter.enemies.size(); i++) {
-            EnemyCrafter.enemies.get(i).move();
+        for (int i = 0; i < StaticValues.enemies.size(); i++) {
+            StaticValues.enemies.get(i).move();
         }
         collisionWithEnemy();
         collisionEnemy();
-
+        // Остановка проигрывания фоновой музыки меню по событию
+        if(StaticValues.clickStartButton){
+            soundMenu.menuSoundStopper();
+        }
     }
 
     private void collisionWithEnemy() { // Столкновение врагов с игроком
         Random random = new Random();
-        for (int i = 0; i < EnemyCrafter.enemies.size(); i++) {
-            if (player.getRectangle().intersects(EnemyCrafter.enemies.get(i).getRectangle())) {
-                EnemyCrafter.enemies.get(i).dx = random.nextInt(20) - 10;
-                EnemyCrafter.enemies.get(i).dy = random.nextInt(20) - 10;
-                EnemyCrafter.enemies.get(i).image = EnemyCrafter.enemies.get(i).imageKnock;
-            } else if (!player.getRectangle().intersects(EnemyCrafter.enemies.get(i).getRectangle())) {
-                EnemyCrafter.enemies.get(i).image = EnemyCrafter.enemies.get(i).imageNormal;
+        for (int i = 0; i < StaticValues.enemies.size(); i++) {
+            if (player.getRectangle().intersects(StaticValues.enemies.get(i).getRectangle())) {
+                StaticValues.enemies.get(i).dx = random.nextInt(20) - 10;
+                StaticValues.enemies.get(i).dy = random.nextInt(20) - 10;
+                StaticValues.enemies.get(i).image = StaticValues.enemies.get(i).imageKnock;
+            } else if (!player.getRectangle().intersects(StaticValues.enemies.get(i).getRectangle())) {
+                StaticValues.enemies.get(i).image = StaticValues.enemies.get(i).imageNormal;
             }
         }
     }
 
     private void collisionEnemy() { // Столкновение врагов друг с другом
         Random random = new Random();
-        for (int i = 0; i < EnemyCrafter.enemies.size(); i++) {
+        for (int i = 0; i < StaticValues.enemies.size(); i++) {
             for (int j = 0; j < i; j++) {
-                if (EnemyCrafter.enemies.get(j).getRectangle().intersects(EnemyCrafter.enemies.get(i).getRectangle())) {
-                    EnemyCrafter.enemies.get(j).dx = random.nextInt(20) - 10;
-                    EnemyCrafter.enemies.get(i).dy = random.nextInt(20) - 10;
-                    EnemyCrafter.enemies.get(i).image = EnemyCrafter.enemies.get(i).imageKnock;
-                    EnemyCrafter.enemies.get(j).image = EnemyCrafter.enemies.get(j).imageKnock;
+                if (StaticValues.enemies.get(j).getRectangle().intersects(StaticValues.enemies.get(i).getRectangle())) {
+                    StaticValues.enemies.get(j).dx = random.nextInt(20) - 10;
+                    StaticValues.enemies.get(i).dy = random.nextInt(20) - 10;
+                    StaticValues.enemies.get(i).image = StaticValues.enemies.get(i).imageKnock;
+                    StaticValues.enemies.get(j).image = StaticValues.enemies.get(j).imageKnock;
                 }
             }
         }
@@ -118,8 +127,15 @@ public class GamePanel extends JPanel implements ActionListener {
                 player.dy = -5;
             }
             if (e.getKeyCode() == KeyEvent.VK_SPACE){
-                Player.setHit(true);
+                StaticValues.hit = true;
                 soundThread.soundThread.start();
+            }
+            // TODO подвесить методы входа в игру из меню на другое событие
+            if (e.getKeyCode() == KeyEvent.VK_ENTER){
+                StaticValues.clickStartButton=true;
+                enemyCrafter.thread.start();
+                backGroundSoundThread.backgroundSoundThread.start();
+                System.out.println("sbf");
             }
         }
 
@@ -138,7 +154,7 @@ public class GamePanel extends JPanel implements ActionListener {
                 player.dy=0;
             }
             if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-                Player.setHit(false);
+                StaticValues.hit = false;
             }
         }
     }

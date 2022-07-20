@@ -1,6 +1,6 @@
 import javax.sound.sampled.*;
 import java.io.File;
-
+// Фоновый звук непосредственно игры
 public class BackGroundSound {
 
     BackGroundSound(){

@@ -1,21 +1,11 @@
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 
 public class Player {
     final int FINAL_RIGHT = 0;
     final int FINAL_LEFT = 1120;
     final int FINAL_TOP = 0;
     final int FINAL_FLOOR = 500;
-    private static  boolean hit;
-
-    public static synchronized boolean isHit() {
-        return hit;
-    }
-
-    public static synchronized void setHit(boolean hit) {
-        Player.hit = hit;
-    }
 
     Image imageNormal = new ImageIcon("src/img/Serg.png").getImage();
     Image imageLeft = new ImageIcon("src/img/SergLeft.png").getImage();
@@ -30,11 +20,7 @@ public class Player {
     int dy;
     int imageHeight = image.getHeight(null);
     int imageWidth = image.getWidth(null);
-    SoundThread soundsThread = new SoundThread();
 
-    Player (){
-
-    }
     public Rectangle getRectangle (){
         return new Rectangle(x, y, imageWidth, imageHeight );
     }
@@ -49,9 +35,9 @@ public class Player {
     }
     public void fight()  {
 
-        for(int i= 0; i<EnemyCrafter.enemies.size(); i++){
-            if(getRectangle().intersects(EnemyCrafter.enemies.get(i).getRectangle()) && hit){
-                EnemyCrafter.enemies.remove(EnemyCrafter.enemies.get(i));
+        for(int i= 0; i<StaticValues.enemies.size(); i++){
+            if(getRectangle().intersects(StaticValues.enemies.get(i).getRectangle()) && StaticValues.hit){
+                StaticValues.enemies.remove(StaticValues.enemies.get(i));
             }
         }
     }

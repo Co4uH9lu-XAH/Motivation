@@ -4,6 +4,7 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
 import java.io.File;
 
+// звуки при пинках
 public class Sounds {
 
     File hit = new File("src/sounds/Hit.wav");
@@ -22,8 +23,8 @@ public class Sounds {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
+
     void soundPain(){
         try{
             AudioInputStream ais = AudioSystem.getAudioInputStream(pain);
