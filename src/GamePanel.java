@@ -12,7 +12,7 @@ public class GamePanel extends JPanel implements ActionListener {
 
     public final int WIDTH = 1200;    // Размеры панели - ширина
     public final int HEIGHT = 700;   // Размеры панели - высота
-    Timer mainTimer = new Timer(25, this); // Главный таймер, по которому будет обновляться и перерисовываться панель
+    Timer mainTimer = new Timer(40, this); // Главный таймер, по которому будет обновляться и перерисовываться панель
 
     Image backImage = new ImageIcon("src/img/GamePanel.png").getImage();
     Image menuBackImage = new ImageIcon("src/img/MenuPanel.png").getImage();
@@ -20,6 +20,8 @@ public class GamePanel extends JPanel implements ActionListener {
     EnemyCrafter enemyCrafter = new EnemyCrafter();
     BackGroundSoundThread backGroundSoundThread = new BackGroundSoundThread();
     SoundMenu soundMenu = new SoundMenu();
+    MenuButton newGameButton = new MenuButton(200, 200);
+    Sounds sounds = new Sounds();
 
 
 
@@ -28,7 +30,7 @@ public class GamePanel extends JPanel implements ActionListener {
         mainTimer.start();
         setFocusable(true);
         addKeyListener(new KeyActionListener());
-        soundMenu.menuSoundStarter();
+        //soundMenu.menuSoundStarter();
     }
 
     @Override
@@ -36,7 +38,8 @@ public class GamePanel extends JPanel implements ActionListener {
         if (!StaticValues.clickStartButton){
             // TODO нарисовать меню
             g.drawImage(menuBackImage, 0, 0, null);
-        }else{
+            g.drawImage(newGameButton.image, newGameButton.x, newGameButton.y, null);
+        }else if (StaticValues.clickStartButton){
         // Отрисовка игровой панели
         g.drawImage(backImage, 0, 0, null);
 
@@ -65,6 +68,8 @@ public class GamePanel extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) { // На каждое изменение счетчика вызывается методы,
         // и запускается заново метод paint(), который снова и снова все перерисовывает
+        // методы, за которыми следим, которые делают изменения
+        player.isCollision();
         player.move();
         repaint();
         player.fight();
@@ -76,10 +81,11 @@ public class GamePanel extends JPanel implements ActionListener {
         // Остановка проигрывания фоновой музыки меню по событию
         if(StaticValues.clickStartButton){
             soundMenu.menuSoundStopper();
+            newGameButton.pushButton();
         }
     }
 
-    private void collisionWithEnemy() { // Столкновение врагов с игроком
+    void collisionWithEnemy() { // Столкновение врагов с игроком
         Random random = new Random();
         for (int i = 0; i < StaticValues.enemies.size(); i++) {
             if (player.getRectangle().intersects(StaticValues.enemies.get(i).getRectangle())) {
@@ -92,6 +98,7 @@ public class GamePanel extends JPanel implements ActionListener {
         }
     }
 
+
     private void collisionEnemy() { // Столкновение врагов друг с другом
         Random random = new Random();
         for (int i = 0; i < StaticValues.enemies.size(); i++) {
@@ -101,18 +108,19 @@ public class GamePanel extends JPanel implements ActionListener {
                     StaticValues.enemies.get(i).dy = random.nextInt(20) - 10;
                     StaticValues.enemies.get(i).image = StaticValues.enemies.get(i).imageKnock;
                     StaticValues.enemies.get(j).image = StaticValues.enemies.get(j).imageKnock;
+
                 }
             }
         }
     }
 
-    private class KeyActionListener implements KeyListener {
+    class KeyActionListener implements KeyListener {
         @Override
         public void keyTyped(KeyEvent e) {
         }
 
         @Override
-        public void keyPressed(KeyEvent e) {
+        public synchronized void keyPressed(KeyEvent e) {
             SoundThread soundThread = new SoundThread();
             if (e.getKeyCode() == KeyEvent.VK_D) {
                 player.dx = 5;
@@ -128,14 +136,16 @@ public class GamePanel extends JPanel implements ActionListener {
             }
             if (e.getKeyCode() == KeyEvent.VK_SPACE){
                 StaticValues.hit = true;
-                soundThread.soundThread.start();
+                if(player.isCollision) {
+                    soundThread.start();
+
+                }
             }
             // TODO подвесить методы входа в игру из меню на другое событие
             if (e.getKeyCode() == KeyEvent.VK_ENTER){
                 StaticValues.clickStartButton=true;
                 enemyCrafter.thread.start();
-                backGroundSoundThread.backgroundSoundThread.start();
-                System.out.println("sbf");
+                //backGroundSoundThread.backgroundSoundThread.start();
             }
         }
 

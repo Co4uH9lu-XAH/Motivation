@@ -20,6 +20,7 @@ public class Player {
     int dy;
     int imageHeight = image.getHeight(null);
     int imageWidth = image.getWidth(null);
+    boolean isCollision=false;
 
     public Rectangle getRectangle (){
         return new Rectangle(x, y, imageWidth, imageHeight );
@@ -32,6 +33,17 @@ public class Player {
         y-=dy;
         if (y<=FINAL_TOP) y=FINAL_TOP;
         if (y>=FINAL_FLOOR) y=FINAL_FLOOR;
+    }
+    public void isCollision () {
+        for (int i = 0; i < StaticValues.enemies.size(); i++) {
+            if (!getRectangle().intersects(StaticValues.enemies.get(i).getRectangle())) {
+                isCollision = false;
+            }
+            if (getRectangle().intersects(StaticValues.enemies.get(i).getRectangle())) {
+                isCollision = true;
+                break;
+            }
+        }
     }
     public void fight()  {
 
