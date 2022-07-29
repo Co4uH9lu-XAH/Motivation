@@ -15,7 +15,7 @@ public class GamePanel extends JPanel implements ActionListener {
     int buttonX = 150;
     int buttonY = 200;
 
-    boolean click;
+    boolean pauseFlag;
     boolean inStageButton;
 
     Image backImage = new ImageIcon("src/img/GamePanel.png").getImage();
@@ -62,9 +62,11 @@ public class GamePanel extends JPanel implements ActionListener {
                 } catch (InterruptedException ex) {
                     ex.printStackTrace();
                 }
-                StaticValues.clickStartButton = true;
-                enemyCrafter.thread.start();
-                backGroundSoundThread.backgroundSoundThread.start();
+                if(!pauseFlag) {
+                    StaticValues.clickStartButton = true;
+                    enemyCrafter.thread.start();
+                    backGroundSoundThread.backgroundSoundThread.start();
+                }
             }
         });
     }
@@ -178,7 +180,7 @@ public class GamePanel extends JPanel implements ActionListener {
             if (e.getKeyCode() == KeyEvent.VK_S) {
                 player.dy = -5;
             }
-            if (e.getKeyCode() == KeyEvent.VK_SPACE){
+            if (e.getKeyCode() == KeyEvent.VK_SPACE && !pauseFlag){
                 StaticValues.hit = true;
                 if(player.isCollision) {
                     soundThread.start();
@@ -186,6 +188,12 @@ public class GamePanel extends JPanel implements ActionListener {
             }
             if (e.getKeyCode() == KeyEvent.VK_ENTER){
                 newGameButton.changeImageFlag=true;
+            } if (e.getKeyCode() == KeyEvent.VK_P && !pauseFlag){
+                mainTimer.stop();
+                pauseFlag=true;
+            } else if (e.getKeyCode() == KeyEvent.VK_P && pauseFlag){
+                mainTimer.start();
+                pauseFlag=false;
             }
         }
 
@@ -215,8 +223,8 @@ public class GamePanel extends JPanel implements ActionListener {
                 }
                 StaticValues.clickStartButton = true;
                 enemyCrafter.thread.start();
-                backGroundSoundThread.backgroundSoundThread.start();
-            }
+                backGroundSoundThread.backgroundSoundThread.run();
+           }
         }
     }
 }
